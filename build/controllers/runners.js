@@ -37,11 +37,43 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.hook = void 0;
+var shell = require('shelljs');
+var git_1 = require("../utils/git");
 var hook = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var error_1;
     return __generator(this, function (_a) {
-        res.json({ status: 201, err: false, msg: "basic api" });
-        console.log(" >>>> basic");
-        return [2 /*return*/];
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 4, , 5]);
+                //await shell.exec('rm -rf ./tmp');
+                //await shell.exec('mkdir tmp');
+                //await shell.exec('git clone https://github.com/mdnelles/anim-3d-obj.git');
+                //await shell.exec('mv anim-3d-obj ./tmp');
+                //await shell.exec('git clone https://github.com/mdnelles/Component-Library.git');
+                //await shell.exec('mv Component-Library ./tmp');
+                return [4 /*yield*/, shell.exec('ls -la ./tmp/Component-Library/')];
+            case 1:
+                //await shell.exec('rm -rf ./tmp');
+                //await shell.exec('mkdir tmp');
+                //await shell.exec('git clone https://github.com/mdnelles/anim-3d-obj.git');
+                //await shell.exec('mv anim-3d-obj ./tmp');
+                //await shell.exec('git clone https://github.com/mdnelles/Component-Library.git');
+                //await shell.exec('mv Component-Library ./tmp');
+                _a.sent();
+                return [4 /*yield*/, (0, git_1.bumpNpmVersion)()];
+            case 2:
+                _a.sent();
+                return [4 /*yield*/, (0, git_1.moveNewFiles)()];
+            case 3:
+                _a.sent();
+                res.json({ status: 201, err: false, msg: "basic api" });
+                return [3 /*break*/, 5];
+            case 4:
+                error_1 = _a.sent();
+                res.json({ status: 201, err: true, msg: "basic api", error: error_1 });
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
+        }
     });
 }); };
 exports.hook = hook;
