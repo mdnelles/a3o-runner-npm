@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.moveNewFiles = exports.bumpNpmVersion = void 0;
+exports.pause = exports.moveNewFiles = exports.bumpNpmVersion = void 0;
 //import fs from "fs-extra"
 var fs = require('fs-extra');
 var shell = require('shelljs');
@@ -45,10 +45,7 @@ var bumpNpmVersion = function () { return __awaiter(void 0, void 0, void 0, func
         return [2 /*return*/, new Promise(function (resolve) { return __awaiter(void 0, void 0, void 0, function () {
                 return __generator(this, function (_a) {
                     try {
-                        //await fs.copy('./tmp/Component-Library/package.json', './tmp/package-tmp.json');
-                        //.then(() => console.log('success!'))
-                        //.catch(err => console.error(err))
-                        fs.readFile("./tmp/Component-Library/package.json", "utf8", function (err, data) {
+                        fs.readFile("../tmp/anim-3d-obj-npm-publisher/package.json", "utf8", function (err, data) {
                             if (err)
                                 throw err;
                             //console.log(data);
@@ -61,14 +58,12 @@ var bumpNpmVersion = function () { return __awaiter(void 0, void 0, void 0, func
                                     var tmp2 = tmp1[3].split(".");
                                     var num = parseInt(tmp2[2]) + 1;
                                     var version = "    \"version\": \"".concat(tmp2[0], ".").concat(tmp2[1], ".").concat(num, "\",");
-                                    console.log(version);
                                     newFile += "\n" + version;
                                 }
                                 else {
                                     newFile += "\n" + d;
                                 }
                             });
-                            console.log(newFile);
                         });
                         resolve(true);
                     }
@@ -89,26 +84,45 @@ var moveNewFiles = function () { return __awaiter(void 0, void 0, void 0, functi
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
-                            _a.trys.push([0, 2, , 3]);
-                            return [4 /*yield*/, shell.exec('rm -rf ./tmp/Component-Library/src/components')];
+                            _a.trys.push([0, 3, , 4]);
+                            return [4 /*yield*/, shell.exec('rm -rf ../tmp/anim-3d-obj-npm-publisher/src/components')];
                         case 1:
                             _a.sent();
-                            fs.copy('/tmp/anim-3d-obj/src/anim-3d/components', './tmp/Component-Library/src/components', function (err) {
-                                if (err) {
-                                    console.log(err);
-                                    resolve(false);
-                                }
-                                resolve(true);
-                            });
-                            return [3 /*break*/, 3];
+                            return [4 /*yield*/, fs.copy('../tmp/anim-3d-obj/src/components', '../tmp/anim-3d-obj-npm-publisher/src/components', function (err) {
+                                    if (err) {
+                                        console.log("folders move error");
+                                        console.log(err);
+                                        resolve(false);
+                                    }
+                                    else {
+                                        console.log("folders move success");
+                                        resolve(true);
+                                    }
+                                })];
                         case 2:
+                            _a.sent();
+                            return [3 /*break*/, 4];
+                        case 3:
                             error_1 = _a.sent();
                             resolve(true);
-                            return [3 /*break*/, 3];
-                        case 3: return [2 /*return*/];
+                            return [3 /*break*/, 4];
+                        case 4: return [2 /*return*/];
                     }
                 });
             }); })];
     });
 }); };
 exports.moveNewFiles = moveNewFiles;
+var pause = function (seconds) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        return [2 /*return*/, new Promise(function (resolve) { return __awaiter(void 0, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    setTimeout(function () {
+                        resolve(true);
+                    }, seconds * 1000);
+                    return [2 /*return*/];
+                });
+            }); })];
+    });
+}); };
+exports.pause = pause;

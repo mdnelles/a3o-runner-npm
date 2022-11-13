@@ -38,41 +38,68 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.hook = void 0;
 var shell = require('shelljs');
+var env = require("dotenv").config().parsed;
 var git_1 = require("../utils/git");
 var hook = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 4, , 5]);
-                //await shell.exec('rm -rf ./tmp');
-                //await shell.exec('mkdir tmp');
-                //await shell.exec('git clone https://github.com/mdnelles/anim-3d-obj.git');
-                //await shell.exec('mv anim-3d-obj ./tmp');
-                //await shell.exec('git clone https://github.com/mdnelles/Component-Library.git');
-                //await shell.exec('mv Component-Library ./tmp');
-                return [4 /*yield*/, shell.exec('ls -la ./tmp/Component-Library/')];
+                _a.trys.push([0, 14, , 15]);
+                return [4 /*yield*/, shell.exec('rm -rf ../tmp')];
             case 1:
-                //await shell.exec('rm -rf ./tmp');
-                //await shell.exec('mkdir tmp');
-                //await shell.exec('git clone https://github.com/mdnelles/anim-3d-obj.git');
-                //await shell.exec('mv anim-3d-obj ./tmp');
-                //await shell.exec('git clone https://github.com/mdnelles/Component-Library.git');
-                //await shell.exec('mv Component-Library ./tmp');
                 _a.sent();
-                return [4 /*yield*/, (0, git_1.bumpNpmVersion)()];
+                return [4 /*yield*/, shell.exec('mkdir ../tmp')];
             case 2:
                 _a.sent();
-                return [4 /*yield*/, (0, git_1.moveNewFiles)()];
+                return [4 /*yield*/, shell.exec('cd ../tmp && git clone https://github.com/mdnelles/anim-3d-obj.git')];
             case 3:
                 _a.sent();
-                res.json({ status: 201, err: false, msg: "basic api" });
-                return [3 /*break*/, 5];
+                //await shell.exec('mv anim-3d-obj ../tmp/anim-3d-obj');
+                return [4 /*yield*/, shell.exec('cd ../tmp && git clone https://github.com/mdnelles/anim-3d-obj-npm-publisher.git')];
             case 4:
+                //await shell.exec('mv anim-3d-obj ../tmp/anim-3d-obj');
+                _a.sent();
+                //await shell.exec('mv anim-3d-obj-npm-publisher ../tmp/anim-3d-obj-npm-publisher');
+                return [4 /*yield*/, (0, git_1.bumpNpmVersion)()];
+            case 5:
+                //await shell.exec('mv anim-3d-obj-npm-publisher ../tmp/anim-3d-obj-npm-publisher');
+                _a.sent();
+                return [4 /*yield*/, (0, git_1.moveNewFiles)()];
+            case 6:
+                _a.sent();
+                return [4 /*yield*/, (0, git_1.pause)(1)];
+            case 7:
+                _a.sent(); // pause 1 second for files to register
+                return [4 /*yield*/, shell.exec('npm --prefix ../tmp/anim-3d-obj-npm-publisher/ install')];
+            case 8:
+                _a.sent();
+                return [4 /*yield*/, (0, git_1.pause)(1)];
+            case 9:
+                _a.sent(); // pause 1 second for files to register
+                return [4 /*yield*/, shell.exec('npm --prefix ../tmp/anim-3d-obj-npm-publisher/ run build')];
+            case 10:
+                _a.sent();
+                //await shell.exec(`git --prefix ../tmp/anim-3d-obj push https://mdnelles:${process.env.ACCESS_TOKEN}@github.com/mdnelles/anim-3d-obj.git`);
+                return [4 /*yield*/, shell.exec("cd ../tmp/anim-3d-obj-npm-publisher && git add .")];
+            case 11:
+                //await shell.exec(`git --prefix ../tmp/anim-3d-obj push https://mdnelles:${process.env.ACCESS_TOKEN}@github.com/mdnelles/anim-3d-obj.git`);
+                _a.sent();
+                return [4 /*yield*/, shell.exec("cd ../tmp/anim-3d-obj-npm-publisher && git commit -m \"auto - update\"")];
+            case 12:
+                _a.sent();
+                return [4 /*yield*/, shell.exec("cd ../tmp/anim-3d-obj-npm-publisher && git push https://mdnelles:".concat(process.env.ACCESS_TOKEN, "@github.com/mdnelles/anim-3d-obj-npm-publisher.git"))];
+            case 13:
+                _a.sent();
+                //await shell.exec('cd ../tmp/anim-3d-obj && ls');
+                //git push https://mdnelles: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@github.com/mdnelles/anim-3d-obj.git
+                res.json({ status: 201, err: false, msg: "basic api" });
+                return [3 /*break*/, 15];
+            case 14:
                 error_1 = _a.sent();
                 res.json({ status: 201, err: true, msg: "basic api", error: error_1 });
-                return [3 /*break*/, 5];
-            case 5: return [2 /*return*/];
+                return [3 /*break*/, 15];
+            case 15: return [2 /*return*/];
         }
     });
 }); };
