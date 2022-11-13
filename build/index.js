@@ -4,8 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var app_1 = __importDefault(require("./app"));
-var server = app_1.default.listen(app_1.default.get("port"), function () {
-    console.log("  App is running at http://localhost:%d in %s mode", app_1.default.get("port"), app_1.default.get("env"));
+var port = process.env.NODE_PORT || 5026;
+var server = app_1.default.listen(function () {
+    console.log("App is running at http://localhost:".concat(port, " in %s mode"));
     console.log("  Press CTRL-C to stop\n");
 });
 exports.default = server;

@@ -37,7 +37,8 @@ var runners = __importStar(require("./controllers/runners"));
 var urlencodedParser = body_parser_1.default.urlencoded({ extended: false });
 var app = (0, express_1.default)();
 var jsonParser = body_parser_1.default.json();
-var port = env.NODE_PORT || 5026;
+var port = process.env.PORT || 5026;
+// express config
 app.use((0, cors_1.default)());
 app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: true }));
@@ -46,6 +47,8 @@ app.use(express_1.default.json());
 app.use(jsonParser);
 app.use(urlencodedParser);
 app.use((0, helmet_1.default)());
-//app.use("/user", users);
 app.post("/hook", runners.hook);
+app.listen(port, function () {
+    console.log("Server is running on port: " + port);
+});
 exports.default = app;

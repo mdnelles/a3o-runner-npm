@@ -1,3 +1,6 @@
+../tmp/*
+tmp
+.env
 lib-cov
 *.seed
 *.log
