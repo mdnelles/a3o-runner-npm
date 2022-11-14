@@ -19,10 +19,10 @@ export const hook = async (req: any, res: any): Promise<any> => {
         await pause(.5); 
         await shell.exec('npm --prefix ../tmp/anim-3d-obj-npm-publisher/ run build');
 
-        await shell.exec(`git --prefix ../tmp/anim-3d-obj push https://${process.env.GIT_USER}:${process.env.ACCESS_TOKEN}@github.com/${process.env.GIT_USER}/anim-3d-obj.git`);
         await shell.exec(`cd ../tmp/anim-3d-obj-npm-publisher && git add .`);
         await shell.exec(`cd ../tmp/anim-3d-obj-npm-publisher && git commit -m "auto - update"`);
-        await shell.exec(`cd ../tmp/anim-3d-obj-npm-publisher && git push https://${process.env.GIT_USER}:${process.env.ACCESS_TOKEN}@github.com/${process.env.GIT_USER}/anim-3d-obj-npm-publisher.git`);
+        console.log("----start commit push-----")
+        console.log(await shell.exec(`cd ../tmp/anim-3d-obj-npm-publisher && git push https://${process.env.GIT_USER}:${process.env.ACCESS_TOKEN}@github.com/${process.env.GIT_USER}/anim-3d-obj-npm-publisher.git`));
 
         await shell.exec(`cd ../tmp/anim-3d-obj-npm-publisher && npm publish`);
   
